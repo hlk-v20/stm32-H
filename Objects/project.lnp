@@ -33,8 +33,6 @@
 ".\objects\motor.o"
 ".\objects\pwm.o"
 ".\objects\encoder.o"
-".\objects\serial.o"
-".\objects\blueserial.o"
 ".\objects\car.o"
 ".\objects\key.o"
 ".\objects\track.o"

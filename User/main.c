@@ -1,189 +1,139 @@
-//#include "stm32f10x.h"  // Device header
-//#include "Delay.h"
-//#include "OLED.h"
-//#include "LED.h"
-//#include "Timer.h"
-//#include "Motor.h"
-//#include "Encoder.h"
-//#include "Serial.h"
-//#include "BlueSerial.h"
-//#include "PID.h"
-//#include <string.h>
-//#include <stdlib.h>
-//#include<math.h>
-
-//#define SPEED_LOOP_DT 0.01f   // 10ms
-
-//// ¶¨Òå¶¨Ê±Æ÷´íÎó±êÖ¾£¨ÐÞ¸´Ö®Ç°µÄ±¨´í£©
-//uint8_t TimerErrorFlag = 0;
-//uint16_t TimerCount = 0;
-
-//uint8_t RunFlag;  // ÔËÐÐ±êÖ¾±£Áô
-
-//int16_t LeftPWM,RightPWM;
-//int16_t	AvePWM,DifPWM;
-
-//float LeftSpeed,RightSpeed;
-//float AveSpeed,DifSpeed;
-
-//PID_t SpeedPID={
-//	.Kp=2.53,
-//	.Ki=0.10,
-//	.Kd=0,
-//	.OutMax=10,
-//	.OutMin=-10,
-//};
-
-//int main()
-//{
-//	OLED_Init();
-//	// MPU6050_Init();  ²»ÐèÒªÒ²¿ÉÒÔ×¢ÊÍ
-//	LED_Init();
-//	// Key_Init();     ÒÑÉ¾³ý
-//	Motor_Init();
-//	Encoder_Init();
-//	Serial_Init();
-//	Timer_Init();
-//	BlueSerial_Init();
-//	
-//	RunFlag = 1; // Ä¬ÈÏÆô¶¯µç»ú£¨²»ÏëÆô¶¯¾ÍÐ´ 0£©
-//	
-//	while(1)
-//	{
-//		OLED_Printf(50,0,OLED_6X8,"  Speed");	
-//		OLED_Printf(50,8,OLED_6X8,"%05.2f",SpeedPID.Kp);
-//		OLED_Printf(50,16,OLED_6X8,"%05.2f",SpeedPID.Ki);
-//		OLED_Printf(50,24,OLED_6X8,"%05.2f",SpeedPID.Kd);
-//		OLED_Printf(50,32,OLED_6X8,"%+05.1f",SpeedPID.Target);
-//		OLED_Printf(50,40,OLED_6X8,"%+05.1f",AveSpeed);
-//		OLED_Printf(50,48,OLED_6X8,"%+05.0f",SpeedPID.Out);
-//		OLED_Update();
-//		
-//		if (BlueSerial_RxFlag == 1)
-//		{
-//			char *Tag = strtok(BlueSerial_RxPacket, ",");
-//			if (strcmp(Tag, "key") == 0)
-//			{
-//				// ÒÑÉ¾³ý°´¼üÂß¼­
-//			}
-//			else if (strcmp(Tag, "slider") == 0)
-//			{
-//				char *Name = strtok(NULL, ",");
-//				char *Value = strtok(NULL, ",");
-//				
-//				if(strcmp(Name,"SpeedKp")==0)
-//				{
-//					SpeedPID.Kp=atof(Value);
-//				}
-//				else if(strcmp(Name,"SpeedKi")==0)
-//				{
-//					SpeedPID.Ki=atof(Value);
-//				}
-//				else if(strcmp(Name,"SpeedKd")==0)
-//				{
-//					SpeedPID.Kd=atof(Value);
-//				}
-//			}
-//			else if (strcmp(Tag, "joystick") == 0)
-//			{
-//				int8_t LH = atoi(strtok(NULL, ","));
-//				int8_t LV = atoi(strtok(NULL, ","));
-//				int8_t RH = atoi(strtok(NULL, ","));
-//				int8_t RV = atoi(strtok(NULL, ","));
-//				
-//				SpeedPID.Target=LV/25.0;
-//				DifPWM=0;
-//			}
-//			
-//			BlueSerial_RxFlag = 0;
-//		}
-
-//		BlueSerial_Printf("[plot,%f,%f]",SpeedPID.Target,AveSpeed);
-//	}
-//}
-
-//void TIM1_UP_IRQHandler(void)
-//{
-//    static uint16_t SpeedLoopCnt = 0;
-//    
-//    if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
-//    {
-//        TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
-//        
-//        TimerCount++;  // ¶¨Ê±Æ÷¼ÆÊý
-//        
-//        /* ================= µç»úÊä³ö ================= */
-//        if(RunFlag)
-//        {
-//            LeftPWM  = AvePWM + DifPWM;
-//            RightPWM = AvePWM - DifPWM;
-//            
-//            if(LeftPWM > 100) LeftPWM = 100;
-//            if(LeftPWM < -100) LeftPWM = -100;
-//            if(RightPWM > 100) RightPWM = 100;
-//            if(RightPWM < -100) RightPWM = -100;
-//            
-//            Motor_SetPWM(1, LeftPWM);
-//            Motor_SetPWM(2, RightPWM);
-//        }
-//        else
-//        {
-//            Motor_SetPWM(1, 0);
-//            Motor_SetPWM(2, 0);
-//        }
-
-//        /* ================= ËÙ¶È»·£¨10ms£© ================= */
-//        SpeedLoopCnt++;
-//        if(SpeedLoopCnt >= 10)
-//        {
-//            SpeedLoopCnt = 0;
-//            
-//            LeftSpeed  = Encoder_Get(1) * (1.0f / 44.0f) /9.27666;
-//            RightSpeed = Encoder_Get(2) * (1.0f / 44.0f) /9.27666;
-//            
-//            AveSpeed = (LeftSpeed + RightSpeed) / 2.0f;
-//            DifSpeed = LeftSpeed - RightSpeed;
-//            
-//            if(RunFlag)
-//            {
-//                SpeedPID.Actual = AveSpeed;
-//                PID_Update(&SpeedPID);
-//                AvePWM = SpeedPID.Out;
-//            }
-//        }
-//        
-//        /* ================= ÖÐ¶Ï±£»¤ ================= */
-//        if(TIM_GetITStatus(TIM1, TIM_IT_Update) == SET)
-//        {
-//            TimerErrorFlag = 1;
-//            TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
-//        }
-//    }
-//}
-
-
-#include "stm32f10x.h"  // Device header
-#include "Delay.h"
+ï»¿#include "stm32f10x.h"
 #include "OLED.h"
+#include "LED.h"
 #include "Motor.h"
-#include "PWM.h"
-#include "Car.h"
-#include "Track.h"
 #include "Encoder.h"
+#include "PID.h"
+#include "Timer.h"
+
+#define MAX_PWM              60
+#define MIN_PWM             -60
+#define MOTOR_DEAD           25
+
+#define POSITION_TARGET_CNT  5000.0f // target position (encoder average counts)
+#define ANGLE_TARGET_CNT     0.0f    // target heading (left-right count difference)
+#define STOP_POS_BAND        20.0f
+#define STOP_VEL_BAND        1.0f
+
+static int16_t enc_left_delta = 0;
+static int16_t enc_right_delta = 0;
+static int32_t enc_left_sum = 0;
+static int32_t enc_right_sum = 0;
+
+static float position_actual = 0.0f;
+static float angle_actual = 0.0f;
+static float car_speed_cnt = 0.0f;
+
+static int16_t motor_left_pwm = 0;
+static int16_t motor_right_pwm = 0;
+
+static PID_t PositionPID =
+{
+	.Kp = 0.030f,
+	.Ki = 0.0012f,
+	.Kd = 0.080f,
+	.OutMax = 45.0f,
+	.OutMin = -45.0f,
+	.IntegralMax = 400.0f,
+	.IntegralMin = -400.0f,
+};
+
+static PID_t AnglePID =
+{
+	.Kp = 0.90f,
+	.Ki = 0.002f,
+	.Kd = 0.60f,
+	.OutMax = 45.0f,
+	.OutMin = -45.0f,
+	.IntegralMax = 120.0f,
+	.IntegralMin = -120.0f,
+};
+
+static float absf_local(float x)
+{
+	return (x >= 0.0f) ? x : -x;
+}
+
+static int16_t clamp_dead_pwm(float pwm)
+{
+	int16_t out;
+	if (pwm > (float)MAX_PWM) pwm = (float)MAX_PWM;
+	if (pwm < (float)MIN_PWM) pwm = (float)MIN_PWM;
+
+	out = (int16_t)pwm;
+	if (out > 0 && out < MOTOR_DEAD) out = MOTOR_DEAD;
+	if (out < 0 && out > -MOTOR_DEAD) out = -MOTOR_DEAD;
+	return out;
+}
 
 int main(void)
 {
-	
-	Encoder_Init();
-    Car_Init();
-	Motor_Init();
 	OLED_Init();
-	PWM_Init();
-	Track_Init();
-   
+	LED_Init();
+	Motor_Init();
+	Encoder_Init();
+	Timer_Init();
 
-    while (1)
-    {
-		Track_Run();
-    }
+	PID_Init(&PositionPID);
+	PID_Init(&AnglePID);
+
+	while (1)
+	{
+		OLED_ShowString(1, 1, "Pos:", OLED_6X8);
+		OLED_ShowSignedNum(1, 5, (int32_t)position_actual, 6, OLED_6X8);
+		OLED_ShowString(2, 1, "Ang:", OLED_6X8);
+		OLED_ShowSignedNum(2, 5, (int32_t)angle_actual, 6, OLED_6X8);
+		OLED_ShowString(3, 1, "L:", OLED_6X8);
+		OLED_ShowSignedNum(3, 3, motor_left_pwm, 4, OLED_6X8);
+		OLED_ShowString(4, 1, "R:", OLED_6X8);
+		OLED_ShowSignedNum(4, 3, motor_right_pwm, 4, OLED_6X8);
+	}
+}
+
+void TIM4_IRQHandler(void)
+{
+	float pos_out;
+	float ang_out;
+
+	if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET)
+	{
+		enc_left_delta = Encoder_Get(1);
+		enc_right_delta = Encoder_Get(2);
+
+		enc_left_sum += enc_left_delta;
+		enc_right_sum += enc_right_delta;
+
+		position_actual = (enc_left_sum + enc_right_sum) * 0.5f;
+		angle_actual = (enc_right_sum - enc_left_sum);
+		car_speed_cnt = (enc_left_delta + enc_right_delta) * 0.5f;
+
+		PositionPID.Target = POSITION_TARGET_CNT;
+		PositionPID.Actual = position_actual;
+		PID_Update(&PositionPID);
+		pos_out = PositionPID.Out;
+
+		AnglePID.Target = ANGLE_TARGET_CNT;
+		AnglePID.Actual = angle_actual;
+		PID_Update(&AnglePID);
+		ang_out = AnglePID.Out;
+
+		// differential drive synthesis:
+		// position loop gives forward drive, angle loop gives steering correction
+		motor_left_pwm = clamp_dead_pwm(pos_out - ang_out);
+		motor_right_pwm = clamp_dead_pwm(pos_out + ang_out);
+
+		if (absf_local(PositionPID.Target - position_actual) < STOP_POS_BAND &&
+			absf_local(car_speed_cnt) < STOP_VEL_BAND)
+		{
+			motor_left_pwm = 0;
+			motor_right_pwm = 0;
+			PID_Reset(&PositionPID);
+			PID_Reset(&AnglePID);
+		}
+
+		Motor_SetPWM(1, motor_left_pwm);
+		Motor_SetPWM(2, motor_right_pwm);
+
+		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+	}
 }

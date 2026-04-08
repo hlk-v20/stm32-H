@@ -16,9 +16,12 @@ typedef struct {
 	
 	float OutMax;
 	float OutMin;
+	float IntegralMax;
+	float IntegralMin;
 } PID_t;
 
 void PID_Update(PID_t *p);
 void PID_Init(PID_t*p);
+void PID_Reset(PID_t *p);
 
 #endif

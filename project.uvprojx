@@ -736,26 +736,6 @@
               <FilePath>.\Hardware\Encoder.h</FilePath>
             </File>
             <File>
-              <FileName>Serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\Serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>Serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\Serial.h</FilePath>
-            </File>
-            <File>
-              <FileName>BlueSerial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Hardware\BlueSerial.c</FilePath>
-            </File>
-            <File>
-              <FileName>BlueSerial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\Hardware\BlueSerial.h</FilePath>
-            </File>
-            <File>
               <FileName>Car.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Hardware\Car.c</FilePath>

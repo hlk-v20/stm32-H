@@ -9,8 +9,21 @@ void PID_Init(PID_t*p)
 	p->Error0=0;
 	p->Error1=0;
 	p->ErrorInt=0;
+	if (p->IntegralMax == 0 && p->IntegralMin == 0)
+	{
+		p->IntegralMax = p->OutMax;
+		p->IntegralMin = p->OutMin;
+	}
 }
 
+void PID_Reset(PID_t *p)
+{
+	p->Actual = 0;
+	p->Out = 0;
+	p->Error0 = 0;
+	p->Error1 = 0;
+	p->ErrorInt = 0;
+}
 
 void PID_Update(PID_t *p)
 {
@@ -20,6 +33,8 @@ void PID_Update(PID_t *p)
 	if (p->Ki != 0)
 	{
 		p->ErrorInt += p->Error0;
+		if (p->ErrorInt > p->IntegralMax) {p->ErrorInt = p->IntegralMax;}
+		if (p->ErrorInt < p->IntegralMin) {p->ErrorInt = p->IntegralMin;}
 	}
 	else
 	{
