@@ -36,6 +36,7 @@
 ".\objects\car.o"
 ".\objects\key.o"
 ".\objects\track.o"
+".\objects\buzzer.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\pid.o"

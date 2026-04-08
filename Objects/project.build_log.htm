@@ -27,16 +27,31 @@ Project File Date:  04/08/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 5 (build 528)', folder: 'D:\Kile5\ARM\ARMCC\Bin'
 Build target 'Target 1'
-compiling Motor.c...
-compiling Timer.c...
-compiling Car.c...
-Hardware\Car.c(43): warning:  #1-D: last line of file ends without a newline
-  }
-Hardware\Car.c: 1 warning, 0 errors
 compiling main.c...
+.\Hardware\Track.h(6): warning:  #1295-D: Deprecated declaration Track_Init - give arg types
+  void Track_Init();
+.\Hardware\Track.h(7): warning:  #1295-D: Deprecated declaration Read_Left1 - give arg types
+  uint8_t Read_Left1();
+.\Hardware\Track.h(8): warning:  #1295-D: Deprecated declaration Read_Left2 - give arg types
+  uint8_t Read_Left2();
+.\Hardware\Track.h(9): warning:  #1295-D: Deprecated declaration Read_Mid - give arg types
+  uint8_t Read_Mid();
+.\Hardware\Track.h(10): warning:  #1295-D: Deprecated declaration Read_Right1 - give arg types
+  uint8_t Read_Right1();
+.\Hardware\Track.h(11): warning:  #1295-D: Deprecated declaration Read_Right2 - give arg types
+  uint8_t Read_Right2();
+User\main.c(28): warning:  #550-D: variable "position_actual"  was set but never used
+  static float position_actual = 0.0f;
+User\main.c(30): warning:  #550-D: variable "car_speed_cnt"  was set but never used
+  static float car_speed_cnt = 0.0f;
+User\main.c(31): warning:  #550-D: variable "motor_left_speed_rpm"  was set but never used
+  static float motor_left_speed_rpm = 0.0f;
+User\main.c(32): warning:  #550-D: variable "motor_right_speed_rpm"  was set but never used
+  static float motor_right_speed_rpm = 0.0f;
+User\main.c: 10 warnings, 0 errors
 linking...
-Program Size: Code=6640 RO-data=2652 RW-data=132 ZI-data=2052  
-".\Objects\project.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=5524 RO-data=268 RW-data=100 ZI-data=1028  
+".\Objects\project.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 

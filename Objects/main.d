@@ -28,10 +28,10 @@
 .\objects\main.o: .\Library\stm32f10x_usart.h
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
-.\objects\main.o: .\Hardware\OLED.h
-.\objects\main.o: .\Hardware\OLED_Data.h
 .\objects\main.o: .\Hardware\LED.h
 .\objects\main.o: .\Hardware\Motor.h
 .\objects\main.o: .\Hardware\Encoder.h
+.\objects\main.o: .\Hardware\Track.h
+.\objects\main.o: .\Hardware\buzzer.h
 .\objects\main.o: User\PID.h
 .\objects\main.o: .\SYSTEM\Timer.h

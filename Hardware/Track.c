@@ -12,7 +12,7 @@ void Track_Init()
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_3|GPIO_Pin_4;
+	GPIO_InitStructure.GPIO_Pin=GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;
 	
 	GPIO_Init(GPIOA,&GPIO_InitStructure);
@@ -56,31 +56,31 @@ void Track_Run()
 	R1=Read_Right1();
 	R2=Read_Right2();
 	
-	if(L1==0&&L2==0&&M==1&&R1==0&&R2==0)//Ç°½ø
-	{
-		Car_forward();
-	}
-	else if(L1==0&&L2==1&&M==0&&R1==0&&R2==0)
-	{
-		Car_Left();
-	}
-	else if(L1==1&&L2==0&&M==0&&R1==0&&R2==0)
-	{
-		Car_Left();
-	}
+	// if(L1==0&&L2==0&&M==1&&R1==0&&R2==0)//Ç°ï¿½ï¿½
+	// {
+	// 	Car_forward();
+	// }
+	// else if(L1==0&&L2==1&&M==0&&R1==0&&R2==0)
+	// {
+	// 	Car_Left();
+	// }
+	// else if(L1==1&&L2==0&&M==0&&R1==0&&R2==0)
+	// {
+	// 	Car_Left();
+	// }
 	
-	else if(L1==0&&L2==0&&M==0&&R1==1&&R2==0)
-	{
-		Car_Right();
-	}
-	else if(L1==0&&L2==0&&M==0&&R1==0&&R2==1)
-	{
-		Car_Right();
-	}
-	else if(L1==0&&L2==0&&M==0&&R1==0&&R2==0)
-	{
-		Car_Stop();
-	}
+	// else if(L1==0&&L2==0&&M==0&&R1==1&&R2==0)
+	// {
+	// 	Car_Right();
+	// }
+	// else if(L1==0&&L2==0&&M==0&&R1==0&&R2==1)
+	// {
+	// 	Car_Right();
+	// }
+	// else if(L1==0&&L2==0&&M==0&&R1==0&&R2==0)
+	// {
+	// 	Car_Stop();
+	// }
 	
 	
 }
